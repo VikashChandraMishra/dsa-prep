@@ -4,33 +4,34 @@
 // The sorting must be done in-place, without making a copy of the original array.
 class Solution {
 
-    // Time complexity is O(n)
+    // Time complexity is O(n) // Single pass
     // Space complexity is O(1)
+    public static void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+
+    // Uses Dutch National Flag algorithm
+    // Assumes 
+    // 0 -> low = 0 .i.e., low is the right boundary of zeroes
+    // low -> mid - 1 = 1 .i.e., mid - 1 is the right boundary of ones
+    // mid + 1 -> high = Unknown. This is what needs to be sorted.
+    // high + 1 -> end = 2 .i.e., high + 1 is the left boundary of twos 
     public static void sortZeroOneTwo(int[] nums) {
-        int zeroes = 0, ones = 0, twos = 0;
+        int low = 0, mid = 0, high = nums.length - 1;
 
-        for (int i = 0; i < nums.length; i++) {
-            if (nums[i] == 0) {
-                zeroes++;
-            } else if (nums[i] == 1) {
-                ones++;
-            } else if (nums[i] == 2) {
-                twos++;
+        while (mid <= high) {
+            if (nums[mid] == 0) {
+                swap(nums, low, mid);
+                low++;
+                mid++;
+            } else if (nums[mid] == 1) {
+                mid++;
+            } else {
+                swap(nums, mid, high);
+                high--;
             }
-        }
-
-        int i = 0;
-
-        for (int j = 0; j < zeroes; i++, j++) {
-            nums[i] = 0;
-        }
-
-        for (int j = 0; j < ones; i++, j++) {
-            nums[i] = 1;
-        }
-
-        for (int j = 0; j < twos; i++, j++) {
-            nums[i] = 2;
         }
     }
 
