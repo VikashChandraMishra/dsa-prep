@@ -1,27 +1,29 @@
-
-import java.util.Arrays;
-
 // Reverse every word in a string
 // Given an input string, containing upper-case and lower-case letters, digits, and spaces( ' ' ). A word is defined as a sequence of non-space characters. The words in s are separated by at least one space.
 // Return a string with the words in reverse order, concatenated by a single space.
 class Solution {
 
-    // Very inefficient. Too many objects created. Time Complexity is O(n2). Space Complexity is O(n).
-    // This is more concise and functional than the previous approach.
-    public static String reverseString(String s) {
-        return new StringBuilder(s).reverse().toString();
+    // Efficient. Time Complexity is O(n). Space Complexity is O(n).
+    public static void reverseWordArray(String[] s) {
+        int left = 0, right = s.length - 1;
+
+        while (left < right) {
+            String temp = s[left];
+            s[left] = s[right];
+            s[right] = temp;
+            left++;
+            right--;
+        }
     }
 
     public static String reverseWords(String s) {
-        String[] words = reverseString(s).split("\\s+");
-
-        Arrays.parallelSetAll(words, i -> reverseString(words[i]));
+        String[] words = s.split("\\s+");
+        reverseWordArray(words);
         String result = String.join(" ", words);
-
         return result.trim();
     }
 
     public static void main(String[] args) {
-        System.out.println(reverseWords("welcome"));
+        System.out.println(reverseWords("amazing coding skills "));
     }
 }
